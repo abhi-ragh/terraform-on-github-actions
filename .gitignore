@@ -2,7 +2,7 @@ Terraform state files
 
 *.tfstate
 .tfstate.
-
+.terraform.tfstate*
 Crash log files
 
 crash.log
