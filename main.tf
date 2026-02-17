@@ -1,6 +1,6 @@
 module "vpc" {
     source = "terraform-aws-modules/vpc/aws"
-    name = "my-vpc"
+    name = "terra-eks-vpc"
     cidr = "10.0.0.0/16"
     azs             = ["us-east-1a", "us-east-1b"]
     private_subnets = ["10.0.1.0/24", "10.0.2.0/24"]
@@ -27,7 +27,7 @@ module "eks" {
     source  = "terraform-aws-modules/eks/aws"
     version = "~> 21.0"
     
-    name       = "terra-action"
+    name       = "terraform-eks"
     kubernetes_version = 1.31 
     
     endpoint_public_access = true
@@ -47,7 +47,7 @@ module "eks" {
     }
     
     eks_managed_node_groups = {
-        terra-nodes = {
+        eks-nodes = {
             instance_types = ["c7i-flex.large"]
             ami_type       = "AL2_x86_64"
             min_size       = 1
