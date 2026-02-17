@@ -10,11 +10,11 @@ module "vpc" {
     enable_dns_hostnames = true
     
     private_subnet_tags = {
-        "kubernetes.io/cluster/example" = "shared"
+        "kubernetes.io/cluster/terra-action" = "shared"
         "kubernetes.io/role/internal-elb" = "1"
     }
     public_subnet_tags = {
-        "kubernetes.io/cluster/example" = "shared"
+        "kubernetes.io/cluster/terra-action" = "shared"
         "kubernetes.io/role/elb" = "1"
     }
     tags = {
@@ -27,7 +27,7 @@ module "eks" {
     source  = "terraform-aws-modules/eks/aws"
     version = "~> 21.0"
     
-    name       = "example"
+    name       = "terra-action"
     kubernetes_version = 1.31 
     
     endpoint_public_access = true

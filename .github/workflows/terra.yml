@@ -46,7 +46,7 @@ jobs:
           aws-region: us-east-1
 
       - name: Update kube config 
-        run:  aws eks update-kubeconfig --name example --region us-east-1
+        run:  aws eks update-kubeconfig --name terra-action --region us-east-1
       
       - name: Install kubectl 
         uses: azure/setup-kubectl@v4
