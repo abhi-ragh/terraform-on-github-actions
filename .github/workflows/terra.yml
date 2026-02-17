@@ -26,7 +26,8 @@ jobs:
       - name: Terraform Apply
         run: terraform apply -auto-approve tfplan
 
-      - name: Upload State Artifact 
+      - name: Upload State Artifact
+        if: always()
         uses: actions/upload-artifact@v4
         with: 
           name: tfstate
