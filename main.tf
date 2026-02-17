@@ -47,7 +47,7 @@ module "eks" {
     }
     
     eks_managed_node_groups = {
-        sage-nodes = {
+        terra-nodes = {
             instance_types = ["c7i-flex.large"]
             ami_type       = "AL2_x86_64"
             min_size       = 1
