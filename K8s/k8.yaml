@@ -1,14 +1,14 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
   name: nginx-deployment
   labels:
     app: nginx
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: nginx
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: nginx
   template:
     metadata:
       labels:
@@ -17,17 +17,38 @@ spec:
       containers:
       - name: nginx
         image: nginx:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
+  strategy:
+    blueGreen: 
+      activeService: rollout-bluegreen-active
+      previewService: rollout-bluegreen-preview
+      autoPromotionEnabled: false
+ 
 ---
-apiVersion: v1
 kind: Service
+apiVersion: v1
 metadata:
-  name: nginx-service
+  name: rollout-bluegreen-active
 spec:
-  type: LoadBalancer
   selector:
-    app: nginx
+    app: rollout-bluegreen
   ports:
-  - port: 80
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+ 
+ 
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: rollout-bluegreen-preview
+spec:
+  selector:
+    app: rollout-bluegreen
+  ports:
+  - protocol: TCP
+    port: 80
     targetPort: 80
