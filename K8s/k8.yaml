@@ -21,34 +21,24 @@ spec:
         ports:
         - containerPort: 80
   strategy:
-    blueGreen: 
-      activeService: rollout-bluegreen-active
-      previewService: rollout-bluegreen-preview
-      autoPromotionEnabled: true
+    canary:
+      steps:
+      - setWeight: 10
+      - pause: {}
  
 ---
-kind: Service
 apiVersion: v1
+kind: Service
 metadata:
-  name: rollout-bluegreen-active
+  name: argo-app-service
+  namespace: default
+  labels:
+    app: argo-app
 spec:
   selector:
     app: nginx
   ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 80
- 
- 
----
-kind: Service
-apiVersion: v1
-metadata:
-  name: rollout-bluegreen-preview
-spec:
-  selector:
-    app: nginx
-  ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 80
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP
